@@ -1,0 +1,53 @@
+# Configuration for training object detection models using the NAPLab-LiDAR Dataset
+
+# Path to the root directory where the NAPLab-LiDAR Dataset is located.
+path: /cluster/home/emilsko/Yv2/NAPLab-LiDAR-Dataset
+
+# Specifies the directory within the root where training images are stored.
+train: images/train
+
+# Specifies the directory within the root where validation images are stored.
+val: images/val
+
+# Specifies the directory within the root where test images are stored; not used in training, reserved for future testing.
+test: images/test
+
+# Specifies the number of unique object classes in the dataset.
+nc: 8
+
+# Provides a list of names for each object class to be recognized by the model.
+names:
+  - car
+  - truck
+  - bus
+  - motorcycle
+  - bicycle
+  - scooter
+  - person
+  - rider
+
+# Defines various image augmentations to optimize training for LiDAR data, which has unique requirements due to its sparsity and sensitivity to scaling.
+augmentations:
+  # Allows translation of images as a fraction of image size, set to 5% here, to help model generalize better.
+  translate: 0.05
+  
+  # Allows scaling of images by 10%, which helps the model learn to recognize objects at different distances.
+  scale: 0.1
+  
+  # Shear transformation is disabled to avoid unnatural distortions in LiDAR data, which could affect model accuracy.
+  shear: 0
+  
+  # Perspective transformations are disabled to maintain the geometric integrity essential for accurate LiDAR analysis.
+  perspective: 0.0
+  
+  # Vertical flipping is disabled as it is generally not applicable or useful for LiDAR data.
+  flipud: 0.0
+  
+  # Horizontal flipping is enabled at 10% to accommodate varying orientations of objects within the LiDAR scenes.
+  fliplr: 0.1
+  
+  # Mosaic augmentation is disabled to avoid creating overly complex training scenes, which can be counterproductive in LiDAR datasets.
+  mosaic: 0.0
+  
+  # Mixup augmentation is disabled to ensure that the measurements in LiDAR data are preserved and not obscured by blending.
+  mixup: 0.0
